@@ -46,13 +46,16 @@ def calculate_allocation(df_sorted, orders_df):
                 # Append the allocation details to the temporary DataFrame
                 # Check if the lotNo already exists in allocation_df before appending
                 if lot_no not in allocation_df['lotNo'].values:
-                    allocation_df.loc[len(allocation_df)] = {
-                'lotNo': lot_no,
-                'Requested': ordered_qty + allocation_qty,
-                'Previous In hand': in_hand_qty,
-                'Allocated': allocation_qty,
-                'Remaining In hand': in_hand_qty - allocation_qty,
-            }
+                    allocation_df = allocation_df.append(
+                        {
+                            'lotNo': lot_no,
+                            'Requested': ordered_qty + allocation_qty,
+                            'Previous In hand': in_hand_qty,
+                            'Allocated': allocation_qty,
+                            'Remaining In hand': in_hand_qty - allocation_qty,
+                        },
+                        ignore_index=True,
+                    )
 
                 # Update the in-hand stock and total stock in df_sorted
                 df_sorted.at[_, 'IN_HAND_QTY'] -= allocation_qty
@@ -75,13 +78,16 @@ def calculate_allocation(df_sorted, orders_df):
                 # Append the allocation details to the temporary DataFrame
                 # Check if the lotNo already exists in allocation_df before appending
                 if lot_no not in allocation_df['lotNo'].values:
-                    allocation_df.loc[len(allocation_df)] = {
-                'lotNo': lot_no,
-                'Requested': ordered_qty + allocation_qty,
-                'Previous In hand': in_hand_qty,
-                'Allocated': allocation_qty,
-                'Remaining In hand': in_hand_qty - allocation_qty,
-            }
+                    allocation_df = allocation_df.append(
+                        {
+                            'lotNo': lot_no,
+                            'Requested': ordered_qty + allocation_qty,
+                            'Previous In hand': in_hand_qty,
+                            'Allocated': allocation_qty,
+                            'Remaining In hand': in_hand_qty - allocation_qty,
+                        },
+                        ignore_index=True,
+                    )
 
                 # Update the in-hand stock and total stock in df_sorted
                 df_sorted.at[_, 'IN_HAND_QTY'] -= allocation_qty
