@@ -1,0 +1,12 @@
+plotly
+scipy
+pandas
+Flask
+flask-cors
+pyforest
+pulp
+more_itertools
+mlxtend
+joblib
+openpyxl
+numpy<1.24.0
