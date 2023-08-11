@@ -39,16 +39,19 @@ def calculate_allocation(df_sorted, orders_df):
                 lot_no = row['lotNo']
                 in_hand_qty = row['IN_HAND_QTY']
 
+                # Convert lotNo to bytes
+                lot_no_bytes = bytes(str(lot_no), encoding='utf-8')
+
                 # Calculate the allocation quantity for this lotNo (considering FIFO)
                 allocation_qty = min(ordered_qty, in_hand_qty)
                 ordered_qty -= allocation_qty
 
                 # Append the allocation details to the temporary DataFrame
                 # Check if the lotNo already exists in allocation_df before appending
-                if lot_no not in allocation_df['lotNo'].values:
+                if lot_no_bytes not in allocation_df['lotNo'].values:
                     allocation_df = allocation_df.append(
                         {
-                            'lotNo': lot_no,
+                            'lotNo': lot_no_bytes,
                             'Requested': ordered_qty + allocation_qty,
                             'Previous In hand': in_hand_qty,
                             'Allocated': allocation_qty,
@@ -71,16 +74,19 @@ def calculate_allocation(df_sorted, orders_df):
                 lot_no = row['lotNo']
                 in_hand_qty = row['IN_HAND_QTY']
 
+                # Convert lotNo to bytes
+                lot_no_bytes = bytes(str(lot_no), encoding='utf-8')
+
                 # Calculate the allocation quantity for this lotNo (considering FIFO)
                 allocation_qty = min(ordered_qty, in_hand_qty)
                 ordered_qty -= allocation_qty
 
                 # Append the allocation details to the temporary DataFrame
                 # Check if the lotNo already exists in allocation_df before appending
-                if lot_no not in allocation_df['lotNo'].values:
+                if lot_no_bytes not in allocation_df['lotNo'].values:
                     allocation_df = allocation_df.append(
                         {
-                            'lotNo': lot_no,
+                            'lotNo': lot_no_bytes,
                             'Requested': ordered_qty + allocation_qty,
                             'Previous In hand': in_hand_qty,
                             'Allocated': allocation_qty,
@@ -116,6 +122,7 @@ def calculate_allocation(df_sorted, orders_df):
     df_sorted['IN_HAND_QTY'] = df_original['IN_HAND_QTY']
 
     return df_sorted, allocation_df
+
 
 
 
